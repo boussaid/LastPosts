@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="LatTh" title="شريط آخر المواضيع" version_string="1.5" version_id="5" url="http://www.shababadrar.net/vb" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates>
+    <template title="aboutme"><![CDATA[<div id="copyright" style="text-align:center;margin-top:20px;" dir="rtl">
+<img src="styles/default/xenforo/smilies/thumbsup.png"  alt='' />&nbsp;  
+<a href="http://www.sali4ever.com/vbstyle" target="_blank" class="Tooltip" title="برمجة بوسعيد مصطفى">خواطر ستايل</a> &nbsp;
+<img src="styles/default/xenforo/smilies/thumbsup.png"  alt='' />
+</div>]]></template>
+    <template title="option_list_option_multi_last"><![CDATA[<xen:selectunit label="{$preparedOption.title}" name="{$fieldPrefix}[{$preparedOption.option_id}]" value="{xen:raw $preparedOption.option_value}"
+hint="{$preparedOption.hint}" size="10" multiple="true">
+	<xen:options source="$formatParams" />
+	<xen:explain>{xen:raw $preparedOption.explain}</xen:explain>
+	<xen:html>
+		<input type="hidden" name="{$listedFieldName}" value="{$preparedOption.option_id}" />
+		{xen:raw $editLink}
+	</xen:html>
+</xen:selectunit>]]></template>
+  </admin_templates>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="file_health_check" execute_order="10" callback_class="LatTh_EventListener_LoadClassController" callback_method="fileHashes" active="1" description="chek sum"/>
+    <listener event_id="load_class_controller" execute_order="10" callback_class="LatTh_EventListener_LoadClassController" callback_method="listen" active="1" description=""/>
+    <listener event_id="template_create" execute_order="10" callback_class="LatTh_EventListener_LoadClassController" callback_method="templateCreate" active="1" description=""/>
+    <listener event_id="template_hook" execute_order="10" callback_class="LatTh_EventListener_LoadClassController" callback_method="LastThtm" active="1" description=""/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <optiongroups>
+    <group group_id="LatTh" display_order="1" debug_only="0"/>
+    <option option_id="aboutme" edit_format="template" data_type="string" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params>aboutme</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="LatTh" display_order="1000"/>
+    </option>
+    <option option_id="last_on" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="LatTh" display_order="1"/>
+    </option>
+    <option option_id="LatTh_cut_title" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="LatTh" display_order="330"/>
+    </option>
+    <option option_id="LatTh_direction" edit_format="select" data_type="string" can_backup="1">
+      <default_value>right</default_value>
+      <edit_format_params>right={xen:phrase right_to_left}
+left={xen:phrase left_to_right}</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="LatTh" display_order="250"/>
+    </option>
+    <option option_id="LatTh_displayType" edit_format="radio" data_type="string" can_backup="1">
+      <default_value>3</default_value>
+      <edit_format_params>3=شكل 1 ( بتلميح يعرض معلومات الموضوع )
+4=شكل 2 (طريقة معاينة محتوى الموضوع )</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="LatTh" display_order="110"/>
+    </option>
+    <option option_id="LatTh_forum_nodes" edit_format="callback" data_type="array" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params>LatTh_Option_ForumChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <relation group_id="LatTh" display_order="400"/>
+    </option>
+    <option option_id="LatTh_position" edit_format="radio" data_type="string" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params>1= أعلى الأقسام
+2= أسفل الأقسام</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="LatTh" display_order="100"/>
+    </option>
+    <option option_id="LatTh_speed" edit_format="spinbox" data_type="string" can_backup="1">
+      <default_value>50</default_value>
+      <edit_format_params>size=4
+min=10
+step=10</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="LatTh" display_order="240"/>
+    </option>
+    <option option_id="LatTh_threads_count" edit_format="spinbox" data_type="numeric" can_backup="1">
+      <default_value>10</default_value>
+      <edit_format_params>size=3</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="LatTh" display_order="220"/>
+    </option>
+    <option option_id="LatTh_title" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value>آخر المشاركات</default_value>
+      <edit_format_params>size=20</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="LatTh" display_order="210"/>
+    </option>
+    <option option_id="LatTh_title_length" edit_format="spinbox" data_type="numeric" can_backup="1">
+      <default_value>80</default_value>
+      <edit_format_params>size=4
+min=10
+step=10</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="LatTh" display_order="340"/>
+    </option>
+    <option option_id="lusr_group" edit_format="callback" data_type="array" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params>LatTh_EventListener_LoadClassController::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <relation group_id="LatTh" display_order="500"/>
+    </option>
+  </optiongroups>
+  <permissions>
+    <permission_groups/>
+    <permissions>
+      <permission permission_group_id="general" permission_id="LatTh_cansee" permission_type="flag" default_value="unset" interface_group_id="generalPermissions" display_order="12000"/>
+    </permissions>
+    <interface_groups/>
+  </permissions>
+  <phrases>
+    <phrase title="no_nodeselect" version_id="4" version_string="1.4"><![CDATA[لم يتم اختيار أي قسم بعد .. الرجاء اختيار الأقسام التي سيتم عرضها بالشريط.]]></phrase>
+    <phrase title="option_aboutme" version_id="5" version_string="1.5"><![CDATA[حول الهاك]]></phrase>
+    <phrase title="option_aboutme_explain" version_id="5" version_string="1.5"><![CDATA[]]></phrase>
+    <phrase title="option_group_LatTh" version_id="5" version_string="1.5"><![CDATA[شريط آخر المشاركات]]></phrase>
+    <phrase title="option_group_LatTh_description" version_id="5" version_string="1.5"><![CDATA[شريط متحرك لعرض آخر مشاركات المنتدى بمعلومات مفصلة]]></phrase>
+    <phrase title="option_last_on" version_id="4" version_string="1.4"><![CDATA[تفعيل المنتج]]></phrase>
+    <phrase title="option_last_on_explain" version_id="4" version_string="1.4"><![CDATA[]]></phrase>
+    <phrase title="option_LatTh_cut_title" version_id="4" version_string="1.4"><![CDATA[إستخدام قطع الموضوع ؟]]></phrase>
+    <phrase title="option_LatTh_cut_title_explain" version_id="5" version_string="1.5"><![CDATA[سيتم قطع عنوان الموضوع و استبداله بنقاط حين يصل عدد الأحرف الى المحدد أسفله]]></phrase>
+    <phrase title="option_LatTh_direction" version_id="4" version_string="1.4"><![CDATA[الإتجاه]]></phrase>
+    <phrase title="option_LatTh_direction_explain" version_id="4" version_string="1.4"><![CDATA[يمكنك اختيار الاتجاه من اليمين لليسار أو العكس]]></phrase>
+    <phrase title="option_LatTh_displayType" version_id="4" version_string="1.4"><![CDATA[طريقة العرض]]></phrase>
+    <phrase title="option_LatTh_displayType_explain" version_id="5" version_string="1.5"><![CDATA[الشريط متوفر بشكلين ... إختر طريقة ظهور محتوى الشريط التي تريد]]></phrase>
+    <phrase title="option_LatTh_forum_nodes" version_id="4" version_string="1.4"><![CDATA[المنتديات  المطلوب عرض مواضيعها]]></phrase>
+    <phrase title="option_LatTh_forum_nodes_explain" version_id="4" version_string="1.4"><![CDATA[إختر المنتديات  المطلوب عرض مواضيعها في الشريط .. المنتديات الغير مختارة لن يتم عرض مواضيعها]]></phrase>
+    <phrase title="option_LatTh_position" version_id="4" version_string="1.4"><![CDATA[مكان ظهور الشريط]]></phrase>
+    <phrase title="option_LatTh_position_explain" version_id="5" version_string="1.5"><![CDATA[عرض الشريط أعلى أو أسفل الأقسام]]></phrase>
+    <phrase title="option_LatTh_speed" version_id="4" version_string="1.4"><![CDATA[سرعة الشريط]]></phrase>
+    <phrase title="option_LatTh_speed_explain" version_id="4" version_string="1.4"><![CDATA[]]></phrase>
+    <phrase title="option_LatTh_threads_count" version_id="4" version_string="1.4"><![CDATA[عدد المواضيع]]></phrase>
+    <phrase title="option_LatTh_threads_count_explain" version_id="4" version_string="1.4"><![CDATA[اختر عدد المواضيع التي تريد عرضها]]></phrase>
+    <phrase title="option_LatTh_title" version_id="4" version_string="1.4"><![CDATA[عنوان الشريط]]></phrase>
+    <phrase title="option_LatTh_title_explain" version_id="4" version_string="1.4"><![CDATA[]]></phrase>
+    <phrase title="option_LatTh_title_length" version_id="4" version_string="1.4"><![CDATA[قطع الموضوع]]></phrase>
+    <phrase title="option_LatTh_title_length_explain" version_id="4" version_string="1.4"><![CDATA[حدد عدد الاحرف قبل أن يتم قطع الموضوع]]></phrase>
+    <phrase title="option_lusr_group" version_id="5" version_string="1.5"><![CDATA[المجموعات المسموح لها]]></phrase>
+    <phrase title="option_lusr_group_explain" version_id="5" version_string="1.5"><![CDATA[]]></phrase>
+    <phrase title="permission_general_LatTh_cansee" version_id="5" version_string="1.5"><![CDATA[يمكنه مشاهدة آخر المواضيع]]></phrase>
+    <phrase title="permission_ltt_keving_ltt_can_see_ticker" version_id="1" version_string="1.0"><![CDATA[Kann den Ticker sehen?]]></phrase>
+  </phrases>
+  <route_prefixes/>
+  <style_properties/>
+  <templates>
+    <template title="last_th" version_id="5" version_string="1.5"><![CDATA[<style type="text/css">
+table.dataTable {margin: 0;}
+.heading {margin-bottom: 0;}
+
+</style><xen:if is="{$LatTh.threads}">
+<xen:if is="{$LatTh.nodes}">
+<b>{$xenOptions.LatTh_title}:</b> <br />
+{xen:phrase no_nodeselect}
+<xen:elseif is="!{$LatTh.nodes}" />
+<div class="sectionMain" style="padding:7px"> 	
+<table class="dataTable" dir="{$xenOptions.LatTh_direction}">
+    <tbody>
+    <tr class="dataRow">
+        <th nowrap="nowrap">{$xenOptions.LatTh_title}</th>
+        <td style="width:100%">
+<marquee behavior="scroll" onmouseover=this.stop() onmouseout=this.start() direction="{$xenOptions.LatTh_direction}" scrollamount=2 scrolldelay="{$xenOptions.LatTh_speed}">
+<xen:foreach loop="$LatTh.threads" value="$thread">
+<a class="Tooltip" href="{xen:link threads/unread, $thread}" title="الكاتب:&nbsp;{$thread.username} | {xen:phrase replies}: {$thread.reply_count} | {xen:phrase views}: {$thread.view_count}">{$thread.title}</a>
+&nbsp;&nbsp;&nbsp;<span style="color: red;">آخر رد بواسطة:</span>&nbsp;{$thread.last_post_username}
+ &nbsp; &nbsp;|•|&nbsp; &nbsp;
+</xen:foreach></marquee>
+</td>
+        </tr>
+</tbody>
+</table>   
+</div>
+</xen:if></xen:if>]]></template>
+    <template title="last_thh" version_id="5" version_string="1.5"><![CDATA[<xen:include template="preview_tooltip" />
+<style type="text/css">
+table.dataTable {margin: 0;}
+.heading {margin-bottom: 0;}
+
+</style><xen:if is="{$LatTh.threads}">
+<xen:if is="{$LatTh.nodes}">
+<b>{$xenOptions.LatTh_title}:</b> <br />
+{xen:phrase no_nodeselect}
+<xen:elseif is="!{$LatTh.nodes}" />
+<div class="sectionMain" style="padding:7px"> 	
+<table class="dataTable" dir="{$xenOptions.LatTh_direction}">
+    <tbody>
+    <tr class="dataRow">
+        <th nowrap="nowrap">{$xenOptions.LatTh_title}</th>
+        <td style="width:100%">
+<marquee onmouseover=this.stop() onmouseout=this.start() direction="{$xenOptions.LatTh_direction}" scrollamount=2 scrolldelay="{$xenOptions.LatTh_speed}">
+<xen:foreach loop="$LatTh.threads" value="$thread">
+
+<a href="{xen:link threads/unread, $thread}" class="PreviewTooltip" data-previewUrl="{xen:link threads/preview, $thread}" title="{xen:phrase replies}: {$thread.reply_count} | {xen:phrase views}: {$thread.view_count}">{$thread.title}</a>
+&nbsp;&nbsp;&nbsp;<span style="color: red;">الكاتب:</span>&nbsp;<xen:username user="$thread" rich="true" /> 
+&nbsp;&nbsp;&nbsp;<span style="color: red;">{xen:phrase last_message}:</span>&nbsp;{$thread.last_post_username}
+ &nbsp; &nbsp;|•|&nbsp; &nbsp; 
+ </a>
+
+</xen:foreach></marquee>
+</td>
+        </tr>
+</tbody>
+</table>   
+</div>
+</xen:if>
+</xen:if>]]></template>
+  </templates>
+  <bb_code_media_sites/>
+  <template_modifications/>
+</addon>
