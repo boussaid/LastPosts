@@ -4,11 +4,7 @@ class LatTh_EventListener_LoadClassController
 {
     public static function listen($class, array &$extend)
     {
-        if(stripos($class, 'ControllerPublic') !== false && !class_exists('XFCP_LatTh_ControllerPublic_Index', false) && (
-        method_exists($class, 'actionIndex') || method_exists($class, 'actionThreads') || method_exists($class, 'actionPopup') ))
-        {
-            $extend[] = 'LatTh_ControllerPublic_Index';
-        }
+        $extend[] = 'LatTh_ControllerPublic_Index';
     }
  public static function fileHashes(XenForo_ControllerAdmin_Abstract $controller, array &$hashes)
     {
@@ -37,8 +33,15 @@ class LatTh_EventListener_LoadClassController
     
     public static function templateCreate($templateName, array &$params, XenForo_Template_Abstract $template)
     {
-        if ($templateName == 'forum_list') {
-            $template->preloadTemplate('last_th','last_thh' );
+        $options = XenForo_Application::get('options');
+        $LatTh_displayType = $options->LatTh_displayType;
+     
+         switch ($LatTh_displayType){
+        case 3: $LatTh_dis = 'last_th';    break;
+        case 4: $LatTh_dis = 'last_thh';    break;
+         }
+		if ($templateName == 'forum_list') {
+            $template->preloadTemplate($LatTh_dis);
         }
     }
     
@@ -47,13 +50,19 @@ class LatTh_EventListener_LoadClassController
        $options = XenForo_Application::get('options');
         $LatTh_displayType = $options->LatTh_displayType;
         $LatTh_position = $options->LatTh_position;
-      
+		
+		 switch ($LatTh_displayType){
+        case 3: $latHook = 'forum_list_nodes';    break;
+        case 4: $latHook = 'forum_list_sidebar';    break;
+         }
+		
+	      
          switch ($LatTh_displayType){
         case 3: $LatTh_dis = 'last_th';    break;
         case 4: $LatTh_dis = 'last_thh';    break;
          }
   
-        if ($hookName == 'forum_list_nodes'){
+        if ($hookName == $latHook){
             $ourTemplate = $template->create($LatTh_dis, $template->getparams());
             $rendered = $ourTemplate->render();
         if ($LatTh_position == 1){ $contnt = $rendered . $contnt; } 

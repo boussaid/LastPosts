@@ -7,13 +7,13 @@ class LatTh_ControllerPublic_Index extends XFCP_LatTh_ControllerPublic_Index {
         if(method_exists('XFCP_LatTh_ControllerPublic_Index', 'actionIndex')){
             $response = parent::actionIndex();    
             if ($response instanceof XenForo_ControllerResponse_View) {
-                $this->getTicker($response);
+                $this->getTh($response);
             }
             return $response;        
         }
     }
     
-    public static function getTicker($response)
+    public static function getTh($response)
     {
         $options = XenForo_Application::get('options');
         $user = XenForo_Visitor::getInstance();
@@ -54,8 +54,7 @@ class LatTh_ControllerPublic_Index extends XFCP_LatTh_ControllerPublic_Index {
             
         $response->params['LatTh'] += array(
             "nodes" => $nodes,
-            "threads" => $Threads,
-            "time" => time()
+            "threads" => $Threads
         );
     }
     }
