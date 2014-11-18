@@ -32,7 +32,7 @@ class LatTh_ControllerPublic_Index extends XFCP_LatTh_ControllerPublic_Index {
   $nodesli= implode(",", $nodesliarr);
 
   if ($nodesli !="" ){
-   $_Threads = $LatThModel->getThreadsByForumIds($nodesli, $options->LatTh_threads_count);
+   $_Threads = $LatThModel->getThreadsByForumIds($nodesli, $options->LatTh_threads_count, $options->LatTh_displaypost);
   
    for ($x=0; $x < count($_Threads); $x++)
    {

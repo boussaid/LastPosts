@@ -8,8 +8,13 @@ class LatTh_EventListener_LoadClassController
     }
  public static function fileHashes(XenForo_ControllerAdmin_Abstract $controller, array &$hashes)
     {
-        $fileHashes = LatTh_Model_Hashes::getHashes();
-        $hashes += $fileHashes;
+        $_hashes = LatTh_Model_Hashes::getHashes();
+        foreach ($_hashes AS $path => $hash)
+        {
+            $hashes[$path] = $hash;
+        }
+
+        unset($_hashes);
     }     
 
      public static function renderOption(XenForo_View $view, $fieldPrefix, array $preparedOption, $canEdit)
@@ -52,14 +57,10 @@ class LatTh_EventListener_LoadClassController
         $LatTh_position = $options->LatTh_position;
 		
 		 switch ($LatTh_displayType){
-        case 3: $latHook = 'forum_list_nodes';    break;
-        case 4: $latHook = 'forum_list_sidebar';    break;
-         }
-		
-	      
-         switch ($LatTh_displayType){
-        case 3: $LatTh_dis = 'last_th';    break;
-        case 4: $LatTh_dis = 'last_thh';    break;
+        case 3: $latHook = 'forum_list_nodes';
+                $LatTh_dis = 'last_th';    break;
+        case 4: $latHook = 'forum_list_sidebar';
+                $LatTh_dis = 'last_thh';   break;
          }
   
         if ($hookName == $latHook){

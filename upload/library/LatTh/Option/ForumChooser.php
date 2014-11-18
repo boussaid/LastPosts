@@ -14,7 +14,7 @@ abstract class LatTh_Option_ForumChooser
 		$nodeModel = XenForo_Model::create('XenForo_Model_Node');
         $f = LatTh_Option_NodeHelper::getAllNodesByType('Forum');
 
-		$forumOptions = $nodeModel->getNodeOptionsArray($f, $preparedOption['option_value'], false, '(غير محدد)');
+		$forumOptions = $nodeModel->getNodeOptionsArray($f, $preparedOption['option_value'], false, new XenForo_Phrase('none'));
 
 		return $view->createTemplateObject('option_list_option_multi_last', array(
 			'fieldPrefix' => $fieldPrefix,
